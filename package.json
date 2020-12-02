@@ -1,0 +1,30 @@
+{
+  "name": "promet-icons",
+  "version": "0.0.1",
+  "description": "Icon automation workflow with Figma",
+  "files": [
+    "dist"
+  ],
+  "author": "Gwokhov",
+  "keywords": [
+    "css",
+    "svg",
+    "figma",
+    "icon",
+    "design"
+  ],
+  "scripts": {
+    "fetch": "rm -rf ./dist && node ./src/fetch.js",
+    "convert": "node ./src/convert.js",
+    "docs": "rm -rf ./publish && node ./src/genDemo.js"
+  },
+  "dependencies": {
+    "figma-js": "^1.13.0",
+    "fs-extra": "^9.0.1",
+    "got": "^11.8.0",
+    "image-to-base64": "^2.1.1",
+    "kebab-case": "^1.0.0",
+    "p-queue": "2.4.2",
+    "svgo": "^1.3.2"
+  }
+}

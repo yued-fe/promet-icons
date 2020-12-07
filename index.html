@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promet icons</title>
+    <link href="./icons.css" rel="stylesheet" type="text/css" />
+    <style>
+      /* icon-style */
+      :root {
+        --size: 40px;
+      }
+      ul {
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(calc(2 * var(--size)), 1fr)
+        );
+        gap: 30px;
+        list-style: none;
+      }
+      li {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: none;
+        border: none;
+        margin: 0 auto;
+      }
+      i {
+        display: inline-block;
+        width: var(--size);
+        height: var(--size);
+        vertical-align: text-bottom;
+      }
+      i.normal {
+        background-color: var(--color, #000);
+        -webkit-mask-image: var(--name);
+        -webkit-mask-position: center center;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-size: var(--size);
+      }
+      i.ext {
+        background: center / var(--size) no-repeat var(--name);
+      }
+      .icon-name {
+        margin-top: 8px;
+        text-align: center;
+        width: 100%;
+        border: none;
+        resize: none;
+        overflow: hidden;
+        height: 44px;
+        font-size: 12px;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Promet icons</h1>
+    <ul></ul>
+    <template>
+      ${iconMap.vector.map(function(name) { return `
+      <li>
+        <i class="normal" style="--name: var(--i-${name})"></i>
+        <textarea class="icon-name" onclick="this.select()">${name}</textarea>
+      </li>
+      `}).join('') } ${iconMap.bit.map(function(name) { return `
+      <li>
+        <i class="ext" style="--name: url(./png/${name}.png)"></i>
+        <textarea class="icon-name" onclick="this.select()">${name}</textarea>
+      </li>
+      `}).join('') }
+    </template>
+    <script>
+      const iconMap = {"bit":["color_hair-bit","color_skin-bit"],"vector":["arrow-left","search","arrow-bottom","arrow-right","complete","close","add","reset","replay","voice","no-voice","regulate","setup","keyboard","delete","share","download-video","add-character","add-dialog","like-outline","like","preview-video","add-background","add-background-down","add-background-up","add-effect","link","parts","backhair","necklace_l","necklace_r","handle","hat","body_acc","backhair_acc","eyeball-diff","eyebrows","eyebrows-adjust","ears","tattoos_face","face_acc","beard","mouth","mouth-adjust","color","sidehair","mainhair","paint_l","paint_r","hairbands","texture","pieceofhair_acc","mainhair_acc","eyeball_large","eyeball_small","eyeball-adjust","hair","clothing","face","color_iris","color_hair","eyeball-scale-multicolor","mouth-scale-multicolor","eyebrows-transform_y-multicolor","eyeball-transform_x-multicolor","mouth-transform_x-multicolor","eyeball-transform_y-multicolor","mouth-transform_y-multicolor","eyebrows-rotate-multicolor","eyeball-spacing_x-multicolor","mouth-rotate-multicolor"]}
+      /**
+       * Convert a string to a template-string
+       * @param  {Object} params
+       * @return {string}
+       */
+      String.prototype.interpolate = function (params) {
+        const names = Object.keys(params)
+        const vals = Object.values(params)
+        const str = new Function(...names, `return \`${this}\`;`)(...vals)
+        return str
+      }
+
+      const $iconList = document.querySelector('ul')
+      const strTemplate = document.querySelector('template').innerHTML
+      $iconList.innerHTML = strTemplate.interpolate({ iconMap })
+    </script>
+  </body>
+</html>
